@@ -54,11 +54,11 @@ jobs:
 #          asset_name: DLP_Win.exe
 #          asset_content_type: application/octet-stream
           
-      - name: Create zip archive
-        run: |
-          cd src/DLP_Win/DLP_Win/bin/Release/net5.0-windows
-          zip -r DLP_Win.zip .
-        shell: bash
+      - name: Create Zip Archive
+        run: Compress-Archive -Path src/DLP_Win/DLP_Win/bin/Release/net5.0-windows -DestinationPath src/DLP_Win/DLP_Win/bin/Release/net5.0-windows/DLP_Win.zip
+        shell: powershell
+        env:
+          DOTNET_ROOT: C:\Users\runneradmin\AppData\Local\Microsoft\dotnet
 
       - name: Upload Release Asset
         id: upload-release-asset
@@ -70,5 +70,3 @@ jobs:
           asset_path: src/DLP_Win/DLP_Win/bin/Release/net5.0-windows/DLP_Win.zip
           asset_name: DLP_Win.zip
           asset_content_type: application/zip
-
-
