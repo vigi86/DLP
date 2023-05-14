@@ -209,6 +209,8 @@ namespace DLP_Win
             }
             else
             {
+                dataGridView1.Rows.Clear();
+
                 // JSON-String in Liste von Ruleset-Objekten deserialisieren
                 using (StreamReader reader = new StreamReader(fileName))
                 {
@@ -241,6 +243,9 @@ namespace DLP_Win
         private void saveRulesetDialog_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
         {
             string fileName = saveRulesetDialog.FileName;
+            string filePath = Path.Combine(Application.StartupPath, "lof");
+            File.WriteAllText(filePath, fileName);
+
             if (rulesets is not null)
             {
                 rulesets.Clear();
@@ -268,12 +273,19 @@ namespace DLP_Win
 
             rulesets.Sort((x, y) => x.Index.CompareTo(y.Index));
 
+            //var options = new JsonSerializerOptions
+            //{
+            //    WriteIndented = true, // Formatiere JSON mit Einrückungen und Zeilenumbrüchen
+            //    //Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping // Verwende eine sichere JSON-Codierung
+            //};
+
             // Rulesets-Liste als JSON-Datei speichern
-            string jsonString = JsonSerializer.Serialize(rulesets);
+            string jsonString = JsonSerializer.Serialize(rulesets); //, new JsonSerializerOptions() { WriteIndented = true });
             using (StreamWriter writer = new StreamWriter(fileName))
             {
                 writer.Write(jsonString);
             }
+
             datagridChanged = false;
         }
 
