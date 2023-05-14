@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="DLP_Win.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="AHV_NR" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">.*756\.\d{4}\.\d{4}\.\d{2}.*</Value>
+    </Setting>
+    <Setting Name="CUSTOMER_NR" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">\d{2}\.\d{5}-\d</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
