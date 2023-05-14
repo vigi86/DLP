@@ -61,7 +61,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: src/DLP_Win/DLP_Win/bin/Release/net5.0-windows.zip
-          asset_name: net5.0-windows.zip
+          asset_path: src/DLP_Win/DLP_Win/bin/Release/
+          asset_name: DLP_Win.zip
           asset_content_type: application/zip
 
