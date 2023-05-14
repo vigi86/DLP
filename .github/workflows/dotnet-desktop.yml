@@ -42,20 +42,12 @@ jobs:
           release_name: Release ${{ steps.previoustag.outputs.tag }}
           draft: false
           prerelease: false
-
-#      - name: Upload Release Asset
-#        id: upload-release-asset
-#        uses: actions/upload-release-asset@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          upload_url: ${{ steps.create_release.outputs.upload_url }}
-#          asset_path: src/DLP_Win/DLP_Win/bin/Release/net5.0-windows/DLP_Win.exe
-#          asset_name: DLP_Win.exe
-#          asset_content_type: application/octet-stream
           
       - name: Create Zip Archive
-        run: Compress-Archive -Path src/DLP_Win/DLP_Win/bin/Release/net5.0-windows -DestinationPath src/DLP_Win/DLP_Win/bin/Release/net5.0-windows/DLP_Win.zip
+        run: |
+          mkdir src/DLP_Win/DLP_Win/bin/Release/DLP_Win
+          Copy-Item -Path src/DLP_Win/DLP_Win/bin/Release/net5.0-windows/* -Destination src/DLP_Win/DLP_Win/bin/Release/DLP_Win
+          Compress-Archive -Path src/DLP_Win/DLP_Win/bin/Release/DLP_Win -DestinationPath src/DLP_Win/DLP_Win/bin/Release/DLP_Win.zip
         shell: powershell
         env:
           DOTNET_ROOT: C:\Users\runneradmin\AppData\Local\Microsoft\dotnet
