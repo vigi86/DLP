@@ -51,8 +51,8 @@ namespace DLP_Win
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.txtLogger = new System.Windows.Forms.TextBox();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.openRulesetDialog = new System.Windows.Forms.OpenFileDialog();
+            this.saveRulesetDialog = new System.Windows.Forms.SaveFileDialog();
             this.pnlMain.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -109,14 +109,17 @@ namespace DLP_Win
             this.dataGridView1.RowTemplate.Height = 25;
             this.dataGridView1.Size = new System.Drawing.Size(786, 370);
             this.dataGridView1.TabIndex = 1;
+            this.dataGridView1.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dataGridView1_CellBeginEdit);
             this.dataGridView1.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dataGridView1_CellValidating);
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             this.dataGridView1.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.dataGridView1_SortCompare);
             // 
             // colIndex
             // 
+            this.dataGridView1.CellValueChanged -= dataGridView1_CellValueChanged;
             this.colIndex.HeaderText = "Index";
             this.colIndex.Name = "colIndex";
+            dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
             // 
             // colIf
             // 
@@ -190,6 +193,7 @@ namespace DLP_Win
             this.rulesetÖffnenToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.rulesetÖffnenToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.rulesetÖffnenToolStripMenuItem.Text = "Ruleset Ö&ffnen";
+            this.rulesetÖffnenToolStripMenuItem.Click += new System.EventHandler(this.rulesetOpenToolStripMenuItem_Click);
             // 
             // rulesetSpeichernToolStripMenuItem
             // 
@@ -197,6 +201,7 @@ namespace DLP_Win
             this.rulesetSpeichernToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.rulesetSpeichernToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.rulesetSpeichernToolStripMenuItem.Text = "Ruleset &Speichern";
+            this.rulesetSpeichernToolStripMenuItem.Click += new System.EventHandler(this.rulesetSaveToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -275,9 +280,21 @@ namespace DLP_Win
             this.txtLogger.Size = new System.Drawing.Size(786, 370);
             this.txtLogger.TabIndex = 0;
             // 
-            // openFileDialog1
+            // openRulesetDialog
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openRulesetDialog.DefaultExt = "json";
+            this.openRulesetDialog.FileName = "ruleset.json";
+            this.openRulesetDialog.Filter = "JSON-Datei (*.json)|*.json";
+            this.openRulesetDialog.Title = "Ruleset öffnen";
+            this.openRulesetDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.openRulesetDialog_FileOk);
+            // 
+            // saveRulesetDialog
+            // 
+            this.saveRulesetDialog.DefaultExt = "json";
+            this.saveRulesetDialog.FileName = "ruleset.json";
+            this.saveRulesetDialog.Filter = "JSON-Date (*.json)|*.json";
+            this.saveRulesetDialog.Title = "Ruleset speichern";
+            this.saveRulesetDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.saveRulesetDialog_FileOk);
             // 
             // frmMain
             // 
@@ -290,6 +307,7 @@ namespace DLP_Win
             this.Name = "frmMain";
             this.Text = "DLP Rule Mgmt";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
+            this.Load += new System.EventHandler(this.frmMain_Load);
             this.pnlMain.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -324,9 +342,9 @@ namespace DLP_Win
         private System.Windows.Forms.ToolStripMenuItem rulesetÖffnenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rulesetSpeichernToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openRulesetDialog;
         private System.Windows.Forms.TextBox txtLogger;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.SaveFileDialog saveRulesetDialog;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIndex;
         private System.Windows.Forms.DataGridViewComboBoxColumn colIf;
         private System.Windows.Forms.DataGridViewComboBoxColumn colContains;
