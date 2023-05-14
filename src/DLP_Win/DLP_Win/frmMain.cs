@@ -211,26 +211,33 @@ namespace DLP_Win
             {
                 dataGridView1.Rows.Clear();
 
-                // JSON-String in Liste von Ruleset-Objekten deserialisieren
-                using (StreamReader reader = new StreamReader(fileName))
+                try
                 {
-                    string jsonString = reader.ReadToEnd();
-                    rulesets = JsonSerializer.Deserialize<List<Ruleset>>(jsonString);
+                    // JSON-String in Liste von Ruleset-Objekten deserialisieren
+                    using (StreamReader reader = new StreamReader(fileName))
+                    {
+                        string jsonString = reader.ReadToEnd();
+                        rulesets = JsonSerializer.Deserialize<List<Ruleset>>(jsonString);
+                    }
+
+                    // DataGridView mit der Liste von Ruleset-Objekten aktualisieren
+                    rulesets.Sort((x, y) => x.Index.CompareTo(y.Index));
+
+                    foreach (var ruleset in rulesets)
+                    {
+                        int rowIndex = dataGridView1.Rows.Add();
+
+                        // Werte in jede Zelle einfügen
+                        dataGridView1.Rows[rowIndex].Cells[0].Value = ruleset.Index;
+                        dataGridView1.Rows[rowIndex].Cells[1].Value = ruleset.If;
+                        dataGridView1.Rows[rowIndex].Cells[2].Value = ruleset.Contains;
+                        dataGridView1.Rows[rowIndex].Cells[3].Value = ruleset.Condition;
+                        dataGridView1.Rows[rowIndex].Cells[4].Value = ruleset.Then;
+                    }
                 }
-
-                // DataGridView mit der Liste von Ruleset-Objekten aktualisieren
-                rulesets.Sort((x, y) => x.Index.CompareTo(y.Index));
-
-                foreach (var ruleset in rulesets)
+                catch (Exception ex)
                 {
-                    int rowIndex = dataGridView1.Rows.Add();
-
-                    // Werte in jede Zelle einfügen
-                    dataGridView1.Rows[rowIndex].Cells[0].Value = ruleset.Index;
-                    dataGridView1.Rows[rowIndex].Cells[1].Value = ruleset.If;
-                    dataGridView1.Rows[rowIndex].Cells[2].Value = ruleset.Contains;
-                    dataGridView1.Rows[rowIndex].Cells[3].Value = ruleset.Condition;
-                    dataGridView1.Rows[rowIndex].Cells[4].Value = ruleset.Then;
+                    txtLogger.Text += ex;
                 }
             }
         }

@@ -29,295 +29,271 @@ namespace DLP_Win
         /// </summary>
         private void InitializeComponent()
         {
-            this.pnlMain = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.cmdScan = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.colIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colIf = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.colContains = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.colCondition = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colThen = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.mnuMain = new System.Windows.Forms.MenuStrip();
-            this.dateiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rulesetÖffnenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rulesetSpeichernToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.stsMain = new System.Windows.Forms.StatusStrip();
-            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.txtLogger = new System.Windows.Forms.TextBox();
-            this.openRulesetDialog = new System.Windows.Forms.OpenFileDialog();
-            this.saveRulesetDialog = new System.Windows.Forms.SaveFileDialog();
-            this.pnlMain.SuspendLayout();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.mnuMain.SuspendLayout();
-            this.stsMain.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.SuspendLayout();
+            pnlMain = new System.Windows.Forms.Panel();
+            panel1 = new System.Windows.Forms.Panel();
+            cmdScan = new System.Windows.Forms.Button();
+            dataGridView1 = new System.Windows.Forms.DataGridView();
+            colIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            colIf = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            colContains = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            colCondition = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            colThen = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            mnuMain = new System.Windows.Forms.MenuStrip();
+            dateiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            rulesetÖffnenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            rulesetSpeichernToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
+            stsMain = new System.Windows.Forms.StatusStrip();
+            toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
+            toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            tabControl1 = new System.Windows.Forms.TabControl();
+            tabPage1 = new System.Windows.Forms.TabPage();
+            tabPage2 = new System.Windows.Forms.TabPage();
+            txtLogger = new System.Windows.Forms.TextBox();
+            openRulesetDialog = new System.Windows.Forms.OpenFileDialog();
+            saveRulesetDialog = new System.Windows.Forms.SaveFileDialog();
+            pnlMain.SuspendLayout();
+            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            mnuMain.SuspendLayout();
+            stsMain.SuspendLayout();
+            tabControl1.SuspendLayout();
+            tabPage1.SuspendLayout();
+            tabPage2.SuspendLayout();
+            SuspendLayout();
             // 
             // pnlMain
             // 
-            this.pnlMain.Controls.Add(this.panel1);
-            this.pnlMain.Controls.Add(this.dataGridView1);
-            this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlMain.Location = new System.Drawing.Point(3, 3);
-            this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(786, 370);
-            this.pnlMain.TabIndex = 1;
+            pnlMain.Controls.Add(panel1);
+            pnlMain.Controls.Add(dataGridView1);
+            pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlMain.Location = new System.Drawing.Point(3, 3);
+            pnlMain.Name = "pnlMain";
+            pnlMain.Size = new System.Drawing.Size(786, 370);
+            pnlMain.TabIndex = 1;
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.cmdScan);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 341);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(786, 29);
-            this.panel1.TabIndex = 2;
+            panel1.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            panel1.Controls.Add(cmdScan);
+            panel1.Location = new System.Drawing.Point(0, 341);
+            panel1.Name = "panel1";
+            panel1.Size = new System.Drawing.Size(786, 29);
+            panel1.TabIndex = 2;
             // 
             // cmdScan
             // 
-            this.cmdScan.Location = new System.Drawing.Point(5, 3);
-            this.cmdScan.Name = "cmdScan";
-            this.cmdScan.Size = new System.Drawing.Size(100, 23);
-            this.cmdScan.TabIndex = 0;
-            this.cmdScan.Text = "Scan System";
-            this.cmdScan.UseVisualStyleBackColor = true;
+            cmdScan.Location = new System.Drawing.Point(5, 3);
+            cmdScan.Name = "cmdScan";
+            cmdScan.Size = new System.Drawing.Size(100, 23);
+            cmdScan.TabIndex = 0;
+            cmdScan.Text = "Scan System";
+            cmdScan.UseVisualStyleBackColor = true;
             // 
             // dataGridView1
             // 
-            this.dataGridView1.AllowUserToOrderColumns = true;
-            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colIndex,
-            this.colIf,
-            this.colContains,
-            this.colCondition,
-            this.colThen});
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.MultiSelect = false;
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.Size = new System.Drawing.Size(786, 370);
-            this.dataGridView1.TabIndex = 1;
-            this.dataGridView1.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dataGridView1_CellBeginEdit);
-            this.dataGridView1.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dataGridView1_CellValidating);
-            this.dataGridView1.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.dataGridView1_SortCompare);
+            dataGridView1.AllowUserToOrderColumns = true;
+            dataGridView1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            dataGridView1.BackgroundColor = System.Drawing.SystemColors.Control;
+            dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { colIndex, colIf, colContains, colCondition, colThen });
+            dataGridView1.Location = new System.Drawing.Point(0, 0);
+            dataGridView1.MultiSelect = false;
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowTemplate.Height = 25;
+            dataGridView1.Size = new System.Drawing.Size(786, 338);
+            dataGridView1.TabIndex = 1;
+            dataGridView1.CellBeginEdit += dataGridView1_CellBeginEdit;
+            dataGridView1.CellValidating += dataGridView1_CellValidating;
+            dataGridView1.SortCompare += dataGridView1_SortCompare;
             // 
             // colIndex
             // 
-            this.colIndex.HeaderText = "Index";
-            this.colIndex.Name = "colIndex";
+            colIndex.HeaderText = "Index";
+            colIndex.Name = "colIndex";
             // 
             // colIf
             // 
-            this.colIf.HeaderText = "Falls ...";
-            this.colIf.Items.AddRange(new object[] {
-            "Aktueller User",
-            "Datei-Inhalt",
-            "Datei-Name",
-            "Inhalt",
-            "Klassifizierung"});
-            this.colIf.Name = "colIf";
-            this.colIf.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colIf.Sorted = true;
-            this.colIf.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            colIf.HeaderText = "Falls ...";
+            colIf.Items.AddRange(new object[] { "Aktueller User", "Datei-Inhalt", "Datei-Name", "Inhalt", "Klassifizierung" });
+            colIf.Name = "colIf";
+            colIf.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            colIf.Sorted = true;
+            colIf.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // colContains
             // 
-            this.colContains.HeaderText = "Selektion";
-            this.colContains.Items.AddRange(new object[] {
-            "!=",
-            "==",
-            "enthält",
-            "enthält nicht",
-            "REGEX"});
-            this.colContains.Name = "colContains";
-            this.colContains.Sorted = true;
-            this.colContains.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            colContains.HeaderText = "Selektion";
+            colContains.Items.AddRange(new object[] { "!=", "==", "enthält", "enthält nicht", "REGEX" });
+            colContains.Name = "colContains";
+            colContains.Sorted = true;
+            colContains.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // colCondition
             // 
-            this.colCondition.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colCondition.HeaderText = "Bedingung";
-            this.colCondition.MinimumWidth = 50;
-            this.colCondition.Name = "colCondition";
-            this.colCondition.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            colCondition.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            colCondition.HeaderText = "Bedingung";
+            colCondition.MinimumWidth = 50;
+            colCondition.Name = "colCondition";
+            colCondition.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // colThen
             // 
-            this.colThen.HeaderText = "dann ...";
-            this.colThen.Items.AddRange(new object[] {
-            "Blockiere",
-            "Notifiziere"});
-            this.colThen.Name = "colThen";
-            this.colThen.Sorted = true;
-            this.colThen.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            colThen.HeaderText = "dann ...";
+            colThen.Items.AddRange(new object[] { "Blockiere", "Notifiziere" });
+            colThen.Name = "colThen";
+            colThen.Sorted = true;
+            colThen.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // mnuMain
             // 
-            this.mnuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.dateiToolStripMenuItem});
-            this.mnuMain.Location = new System.Drawing.Point(0, 0);
-            this.mnuMain.Name = "mnuMain";
-            this.mnuMain.Size = new System.Drawing.Size(800, 24);
-            this.mnuMain.TabIndex = 2;
-            this.mnuMain.Text = "menuStrip1";
+            mnuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { dateiToolStripMenuItem });
+            mnuMain.Location = new System.Drawing.Point(0, 0);
+            mnuMain.Name = "mnuMain";
+            mnuMain.Size = new System.Drawing.Size(800, 24);
+            mnuMain.TabIndex = 2;
+            mnuMain.Text = "menuStrip1";
             // 
             // dateiToolStripMenuItem
             // 
-            this.dateiToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.rulesetÖffnenToolStripMenuItem,
-            this.rulesetSpeichernToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.toolStripMenuItemExit});
-            this.dateiToolStripMenuItem.Name = "dateiToolStripMenuItem";
-            this.dateiToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
-            this.dateiToolStripMenuItem.Text = "&Datei";
+            dateiToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { rulesetÖffnenToolStripMenuItem, rulesetSpeichernToolStripMenuItem, toolStripSeparator1, toolStripMenuItemExit });
+            dateiToolStripMenuItem.Name = "dateiToolStripMenuItem";
+            dateiToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            dateiToolStripMenuItem.Text = "&Datei";
             // 
             // rulesetÖffnenToolStripMenuItem
             // 
-            this.rulesetÖffnenToolStripMenuItem.Name = "rulesetÖffnenToolStripMenuItem";
-            this.rulesetÖffnenToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.rulesetÖffnenToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.rulesetÖffnenToolStripMenuItem.Text = "Ruleset Ö&ffnen";
-            this.rulesetÖffnenToolStripMenuItem.Click += new System.EventHandler(this.rulesetOpenToolStripMenuItem_Click);
+            rulesetÖffnenToolStripMenuItem.Name = "rulesetÖffnenToolStripMenuItem";
+            rulesetÖffnenToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O;
+            rulesetÖffnenToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            rulesetÖffnenToolStripMenuItem.Text = "Ruleset Ö&ffnen";
+            rulesetÖffnenToolStripMenuItem.Click += rulesetOpenToolStripMenuItem_Click;
             // 
             // rulesetSpeichernToolStripMenuItem
             // 
-            this.rulesetSpeichernToolStripMenuItem.Name = "rulesetSpeichernToolStripMenuItem";
-            this.rulesetSpeichernToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.rulesetSpeichernToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.rulesetSpeichernToolStripMenuItem.Text = "Ruleset &Speichern";
-            this.rulesetSpeichernToolStripMenuItem.Click += new System.EventHandler(this.rulesetSaveToolStripMenuItem_Click);
+            rulesetSpeichernToolStripMenuItem.Name = "rulesetSpeichernToolStripMenuItem";
+            rulesetSpeichernToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S;
+            rulesetSpeichernToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            rulesetSpeichernToolStripMenuItem.Text = "Ruleset &Speichern";
+            rulesetSpeichernToolStripMenuItem.Click += rulesetSaveToolStripMenuItem_Click;
             // 
             // toolStripSeparator1
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(206, 6);
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new System.Drawing.Size(206, 6);
             // 
             // toolStripMenuItemExit
             // 
-            this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
-            this.toolStripMenuItemExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.toolStripMenuItemExit.Size = new System.Drawing.Size(209, 22);
-            this.toolStripMenuItemExit.Text = "B&eenden";
-            this.toolStripMenuItemExit.Click += new System.EventHandler(this.toolStripMenuItemExit_Click);
+            toolStripMenuItemExit.Name = "toolStripMenuItemExit";
+            toolStripMenuItemExit.ShortcutKeys = System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4;
+            toolStripMenuItemExit.Size = new System.Drawing.Size(209, 22);
+            toolStripMenuItemExit.Text = "B&eenden";
+            toolStripMenuItemExit.Click += toolStripMenuItemExit_Click;
             // 
             // stsMain
             // 
-            this.stsMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripProgressBar1,
-            this.toolStripStatusLabel1});
-            this.stsMain.Location = new System.Drawing.Point(0, 428);
-            this.stsMain.Name = "stsMain";
-            this.stsMain.Size = new System.Drawing.Size(800, 22);
-            this.stsMain.TabIndex = 3;
-            this.stsMain.Text = "statusStrip1";
+            stsMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripProgressBar1, toolStripStatusLabel1 });
+            stsMain.Location = new System.Drawing.Point(0, 428);
+            stsMain.Name = "stsMain";
+            stsMain.Size = new System.Drawing.Size(800, 22);
+            stsMain.TabIndex = 3;
+            stsMain.Text = "statusStrip1";
             // 
             // toolStripProgressBar1
             // 
-            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
+            toolStripProgressBar1.Name = "toolStripProgressBar1";
+            toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
             // 
             // toolStripStatusLabel1
             // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
-            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
+            toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 24);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(800, 404);
-            this.tabControl1.TabIndex = 4;
+            tabControl1.Controls.Add(tabPage1);
+            tabControl1.Controls.Add(tabPage2);
+            tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            tabControl1.Location = new System.Drawing.Point(0, 24);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new System.Drawing.Size(800, 404);
+            tabControl1.TabIndex = 4;
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.pnlMain);
-            this.tabPage1.Location = new System.Drawing.Point(4, 24);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(792, 376);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Rulesets";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            tabPage1.Controls.Add(pnlMain);
+            tabPage1.Location = new System.Drawing.Point(4, 24);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            tabPage1.Size = new System.Drawing.Size(792, 376);
+            tabPage1.TabIndex = 0;
+            tabPage1.Text = "Rulesets";
+            tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.txtLogger);
-            this.tabPage2.Location = new System.Drawing.Point(4, 24);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(792, 376);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Logs";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            tabPage2.Controls.Add(txtLogger);
+            tabPage2.Location = new System.Drawing.Point(4, 24);
+            tabPage2.Name = "tabPage2";
+            tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            tabPage2.Size = new System.Drawing.Size(792, 376);
+            tabPage2.TabIndex = 1;
+            tabPage2.Text = "Logs";
+            tabPage2.UseVisualStyleBackColor = true;
             // 
             // txtLogger
             // 
-            this.txtLogger.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtLogger.Location = new System.Drawing.Point(3, 3);
-            this.txtLogger.Multiline = true;
-            this.txtLogger.Name = "txtLogger";
-            this.txtLogger.Size = new System.Drawing.Size(786, 370);
-            this.txtLogger.TabIndex = 0;
+            txtLogger.Dock = System.Windows.Forms.DockStyle.Fill;
+            txtLogger.Location = new System.Drawing.Point(3, 3);
+            txtLogger.Multiline = true;
+            txtLogger.Name = "txtLogger";
+            txtLogger.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            txtLogger.Size = new System.Drawing.Size(786, 370);
+            txtLogger.TabIndex = 0;
             // 
             // openRulesetDialog
             // 
-            this.openRulesetDialog.DefaultExt = "json";
-            this.openRulesetDialog.FileName = "ruleset.json";
-            this.openRulesetDialog.Filter = "JSON-Datei (*.json)|*.json";
-            this.openRulesetDialog.Title = "Ruleset öffnen";
-            this.openRulesetDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.openRulesetDialog_FileOk);
+            openRulesetDialog.DefaultExt = "json";
+            openRulesetDialog.FileName = "ruleset.json";
+            openRulesetDialog.Filter = "JSON-Datei (*.json)|*.json";
+            openRulesetDialog.Title = "Ruleset öffnen";
+            openRulesetDialog.FileOk += openRulesetDialog_FileOk;
             // 
             // saveRulesetDialog
             // 
-            this.saveRulesetDialog.DefaultExt = "json";
-            this.saveRulesetDialog.FileName = "ruleset.json";
-            this.saveRulesetDialog.Filter = "JSON-Date (*.json)|*.json";
-            this.saveRulesetDialog.Title = "Ruleset speichern";
-            this.saveRulesetDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.saveRulesetDialog_FileOk);
+            saveRulesetDialog.DefaultExt = "json";
+            saveRulesetDialog.FileName = "ruleset.json";
+            saveRulesetDialog.Filter = "JSON-Date (*.json)|*.json";
+            saveRulesetDialog.Title = "Ruleset speichern";
+            saveRulesetDialog.FileOk += saveRulesetDialog_FileOk;
             // 
             // frmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.stsMain);
-            this.Controls.Add(this.mnuMain);
-            this.Name = "frmMain";
-            this.Text = "DLP Rule Mgmt";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
-            this.pnlMain.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.mnuMain.ResumeLayout(false);
-            this.mnuMain.PerformLayout();
-            this.stsMain.ResumeLayout(false);
-            this.stsMain.PerformLayout();
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(800, 450);
+            Controls.Add(tabControl1);
+            Controls.Add(stsMain);
+            Controls.Add(mnuMain);
+            Name = "frmMain";
+            Text = "DLP Rule Mgmt";
+            FormClosing += frmMain_FormClosing;
+            pnlMain.ResumeLayout(false);
+            panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            mnuMain.ResumeLayout(false);
+            mnuMain.PerformLayout();
+            stsMain.ResumeLayout(false);
+            stsMain.PerformLayout();
+            tabControl1.ResumeLayout(false);
+            tabPage1.ResumeLayout(false);
+            tabPage2.ResumeLayout(false);
+            tabPage2.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
