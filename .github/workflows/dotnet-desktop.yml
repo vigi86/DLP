@@ -19,9 +19,11 @@ jobs:
           dotnet-version: 5.0.x
 
       - name: Restore dependencies
+        working-directory: src/DLP_Win/DLP_Win
         run: dotnet restore
 
       - name: Build
+        working-directory: src/DLP_Win/DLP_Win
         run: dotnet build --configuration Release
 
       - name: Create Release
@@ -42,6 +44,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./DLP_Win/DLP_Win.exe
+          asset_path: ./DLP_Win/DLP_Win/bin/Release/net5.0-windows/win-x64/DLP_Win.exe
           asset_name: DLP_Win.exe
           asset_content_type: application/octet-stream
