@@ -111,15 +111,12 @@ namespace DLP_Win
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dataGridView1_CellBeginEdit);
             this.dataGridView1.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dataGridView1_CellValidating);
-            this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             this.dataGridView1.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.dataGridView1_SortCompare);
             // 
             // colIndex
             // 
-            this.dataGridView1.CellValueChanged -= dataGridView1_CellValueChanged;
             this.colIndex.HeaderText = "Index";
             this.colIndex.Name = "colIndex";
-            dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
             // 
             // colIf
             // 
@@ -307,7 +304,6 @@ namespace DLP_Win
             this.Name = "frmMain";
             this.Text = "DLP Rule Mgmt";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
-            this.Load += new System.EventHandler(this.frmMain_Load);
             this.pnlMain.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

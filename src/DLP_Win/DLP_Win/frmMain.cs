@@ -13,22 +13,54 @@ namespace DLP_Win
         private bool datagridChanged = false;
         private string AHV_NR = Properties.Settings.Default.AHV_NR; //  @".*756\.\d{4}\.\d{4}\.\d{2}.*";
         private string CUSTOMER_NR = Properties.Settings.Default.CUSTOMER_NR; // @"\d{2}\.\d{5}-\d";
+
+        /// <summary>
+        /// Konstruktor.
+        /// </summary>
         public frmMain()
         {
 
             InitializeComponent();
+
+
             dataGridView1.DataSource = rulesets;
             string rulesetPath = Path.Combine(Application.StartupPath, "lof");
             if (File.Exists(rulesetPath))
             {
+                string path;
+                //Liest Datei mit letzten Pfad für Ruleset
                 using (StreamReader reader = new StreamReader(rulesetPath))
                 {
-                    string path = reader.ReadToEnd();
-                    openRulesetDialog.InitialDirectory = path;
+                    path = reader.ReadToEnd();
+                    if (path != "")
+                    {
+                        //Setze Pfad für Öffnen/Speichern Dialoge
+                        openRulesetDialog.InitialDirectory = path;
+                        saveRulesetDialog.InitialDirectory = path;
+                    }
+                }
+
+                //Ruleset einlesen
+                if (File.Exists(path))
+                {
+                    openRulesetDialog.FileName = path;
+                    openRulesetDialog_FileOk(this, new System.ComponentModel.CancelEventArgs());
                 }
             }
+            else
+            {
+                //Ansonsten setzte Applikationspfad als Startpfad
+                openRulesetDialog.InitialDirectory = Application.StartupPath;
+                saveRulesetDialog.InitialDirectory = Application.StartupPath;
+            }
+            this.dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
         }
 
+        /// <summary>
+        /// Event wenn Zellenwert geändert wurde.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -46,25 +78,43 @@ namespace DLP_Win
             }
         }
 
+        /// <summary>
+        /// Sortierfunktion für Spalte Index.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dataGridView1_SortCompare(object sender, DataGridViewSortCompareEventArgs e)
         {
             if (e.Column.Name == "colIndex") // nur für die Spalte "Index"
             {
                 int value1, value2;
-                if (int.TryParse(e.CellValue1.ToString(), out value1) &&
-                    int.TryParse(e.CellValue2.ToString(), out value2))
+                if (e.CellValue1 != null && e.CellValue2 != null)
                 {
-                    e.SortResult = value1.CompareTo(value2);
-                    e.Handled = true;
+                    if (int.TryParse(e.CellValue1.ToString(), out value1) &&
+                    int.TryParse(e.CellValue2.ToString(), out value2))
+                    {
+                        e.SortResult = value1.CompareTo(value2);
+                        e.Handled = true;
+                    }
                 }
             }
         }
 
+        /// <summary>
+        /// Applikation beenden.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toolStripMenuItemExit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// Event wenn Applikation schliesst.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (datagridChanged)
@@ -73,7 +123,7 @@ namespace DLP_Win
 
                 if (result == DialogResult.Yes)
                 {
-                    // Änderungen speichern
+                    saveRulesetDialog_FileOk(sender, new System.ComponentModel.CancelEventArgs());
                 }
                 else if (result == DialogResult.Cancel)
                 {
@@ -82,18 +132,21 @@ namespace DLP_Win
             }
         }
 
+        /// <summary>
+        /// Überprüft die Eingabe einer Zelle im Grid.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
+            //Überprüft spezifisch die Spalte "Index" auf eine Zahl grösser 0.
             if (dataGridView1.Columns[e.ColumnIndex].Name == "colIndex")
             {
                 try
                 {
-
-                    if (e.FormattedValue is not null or not "")
+                    if (e.FormattedValue is not null)
                     {
-                        string s = e.FormattedValue.ToString();
-
-                        if (e.FormattedValue == "")
+                        if (e.FormattedValue.ToString() == "")
                         {
                             return;
                         }
@@ -138,6 +191,11 @@ namespace DLP_Win
             this.originalCellValue = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value?.ToString();
         }
 
+        /// <summary>
+        /// Datei wird geöffnet.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void openRulesetDialog_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
         {
             string fileName = openRulesetDialog.FileName;
@@ -175,6 +233,11 @@ namespace DLP_Win
             }
         }
 
+        /// <summary>
+        /// Datei wird gespeichert.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void saveRulesetDialog_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
         {
             string fileName = saveRulesetDialog.FileName;
@@ -187,13 +250,13 @@ namespace DLP_Win
                 rulesets = new List<Ruleset>();
             }
 
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
             {
 
                 Ruleset ruleset = new Ruleset();
 
 
-                ruleset.Index = dataGridView1.Rows[i].Cells[0].Value != null ? Convert.ToUInt32(dataGridView1.Rows[i].Cells[0].Value) : 1000;
+                ruleset.Index = dataGridView1.Rows[i].Cells[0].Value != null ? Convert.ToUInt32(dataGridView1.Rows[i].Cells[0].Value) : 0;
                 ruleset.If = dataGridView1.Rows[i].Cells[1].Value?.ToString();
                 ruleset.Contains = dataGridView1.Rows[i].Cells[2].Value?.ToString();
                 ruleset.Condition = dataGridView1.Rows[i].Cells[3].Value?.ToString();
@@ -214,24 +277,21 @@ namespace DLP_Win
             datagridChanged = false;
         }
 
-        private void frmMain_Load(object sender, EventArgs e)
-        {
-            //// Lade den Pfad zur zuletzt geöffneten Datei aus den Einstellungen
-            //string lastOpenedFile = Properties.Settings.Default.LastOpenedFile;
-
-
-            //// Öffne die zuletzt geöffnete Datei, falls vorhanden
-            //if (!string.IsNullOrEmpty(lastOpenedFile) && File.Exists(lastOpenedFile))
-            //{
-            //    openRulesetDialog_FileOk(sender, new CancelEventArgs());
-            //}
-        }
-
+        /// <summary>
+        /// Dialog zum Datei öffnen.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void rulesetOpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openRulesetDialog.ShowDialog();
         }
 
+        /// <summary>
+        /// Dialog zum Datei speichern.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void rulesetSaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             saveRulesetDialog.ShowDialog();
