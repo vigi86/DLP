@@ -16,6 +16,8 @@ namespace DLP_Win
 		private readonly string CUSTOMER_NR = Properties.Settings.Default.CUSTOMER_NR; // @"\d{2}\.\d{5}-\d";
 		private readonly List<string> EXTENSIONS = new() { "txt" };// { "txt", "doc", "docx" };
 
+		public Form Self => this;
+
 		public string ToolStripLabel
 		{
 			get { return toolStripStatusLabel1.Text; }
@@ -346,6 +348,11 @@ namespace DLP_Win
 				openRulesetDialog_FileOk(sender, new CancelEventArgs());
 			}
 
+		}
+
+		private void frmMain_Load(object sender, EventArgs e)
+		{
+			//ScanEngine.Monitor();
 		}
 	}
 }

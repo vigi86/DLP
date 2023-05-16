@@ -291,6 +291,7 @@ namespace DLP_Win
 			Name = "frmMain";
 			Text = "DLP Rule Mgmt";
 			FormClosing += frmMain_FormClosing;
+			Load += frmMain_Load;
 			DragDrop += frmMain_DragDrop;
 			pnlMain.ResumeLayout(false);
 			panel1.ResumeLayout(false);

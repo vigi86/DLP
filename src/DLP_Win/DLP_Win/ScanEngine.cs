@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
+using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,29 +14,112 @@ namespace DLP_Win
 {
 	internal class ScanEngine
 	{
-		private static CancellationTokenSource _cancellationTokenSource;
-		private const string QUARANTINE_FOLDER = @"C:\TEMP\QUARANTINE\";
+		private static CancellationTokenSource _scannerCancellationTokenSource;
+		private static CancellationTokenSource _monitorCancellationTokenSource;
+		private static readonly Form _form;
+		private const string QUARANTINE_FOLDER = @"C:\TEMP\QUARANTINE";
+
+		public static async Task Monitor()
+		{
+			_monitorCancellationTokenSource = new CancellationTokenSource();
+
+			try
+			{
+				await Task.Run(() =>
+				{
+					// Alle Laufwerke durchsuchen
+					foreach (DriveInfo drive in DriveInfo.GetDrives())
+					{
+						if (drive.IsReady)
+						{
+							// Nach Dateierweiterung suchen
+							//foreach (string extension in extensions)
+							//{
+							//	SearchFiles(frmMain, drive.RootDirectory, extension, rulesets);
+
+							//	// Überprüfung, ob der Task abgebrochen werden soll
+							//	CheckCancelledTask();
+							//}
+							string compareName = "BK-Soft\\Work1";
+							using (FileSystemWatcher watcher = new FileSystemWatcher(drive.RootDirectory.FullName, "*.txt"))
+							{
+								watcher.NotifyFilter = NotifyFilters.LastAccess
+																	 | NotifyFilters.LastWrite
+																	 | NotifyFilters.FileName
+																	 | NotifyFilters.DirectoryName;
+
+								watcher.Changed += (source, e) => OnChanged(source, e, compareName);
+								watcher.Created += (source, e) => OnChanged(source, e, compareName);
+								watcher.Deleted += (source, e) => OnChanged(source, e, compareName);
+								watcher.Renamed += (source, e) => OnRenamed(source, e, compareName);
+
+								watcher.EnableRaisingEvents = true;
+
+								//Console.WriteLine("Press 'q' to quit the sample.");
+								//while (Console.Read() != 'q') ;
+							}
+						}
+						// Überprüfung, ob der Task abgebrochen werden soll
+						CheckCancelledMonitorTask();
+
+					}
+				}, _monitorCancellationTokenSource.Token);
+
+			}
+			catch (TaskCanceledException)
+			{
+				//Monitor abgebrochen
+			}
+
+
+		}
+
+		private static void OnChanged(object source, FileSystemEventArgs e, string compareName)
+		{
+			Console.WriteLine($"File: {e.FullPath} {e.ChangeType}");
+			if (CompareAuthorToName(e.FullPath, compareName))
+			{
+				Console.WriteLine("The author of the change matches the provided username.");
+			}
+			else
+			{
+				Console.WriteLine("The author of the change does not match the provided username.");
+			}
+		}
+
+		private static void OnRenamed(object source, RenamedEventArgs e, string compareName)
+		{
+			Console.WriteLine($"File: {e.OldFullPath} renamed to {e.FullPath}");
+			if (CompareAuthorToName(e.FullPath, compareName))
+			{
+				Console.WriteLine("The author of the change matches the provided username.");
+			}
+			else
+			{
+				Console.WriteLine("The author of the change does not match the provided username.");
+			}
+		}
 
 		/// <summary>
 		/// Starte den System-Scan
 		/// </summary>
 		/// <param name="rulesets">Liste mit </param>
 		/// <returns></returns>
-		public static async Task Scan(frmMain frmMain, List<Ruleset> rulesets, List<string> extensions) //, TextBox loggerBox, ToolStripStatusLabel toolStripStatusLabel)
+		public static async Task Scan(frmMain frmMain, List<Ruleset> rulesets, List<string> extensions)
 		{
-			_cancellationTokenSource = new CancellationTokenSource();
+			_scannerCancellationTokenSource = new CancellationTokenSource();
 
 			if (frmMain.ScanButton.Text == "System Scan")
 			{
 				frmMain.ScanButton.Text = "Stop Scan";
 				frmMain.ScanButton.BackColor = System.Drawing.Color.Salmon;
 
-
 				if (rulesets != null && extensions != null)
 				{
-					try
+
+					await Task.Run(() =>
 					{
-						await Task.Run(() =>
+						try
 						{
 							// Alle Laufwerke durchsuchen
 							foreach (DriveInfo drive in DriveInfo.GetDrives())
@@ -44,61 +129,80 @@ namespace DLP_Win
 									// Nach Dateierweiterung suchen
 									foreach (string extension in extensions)
 									{
-										SearchFiles(frmMain, drive.RootDirectory, extension, rulesets);
-
 										// Überprüfung, ob der Task abgebrochen werden soll
-										CheckCancelledTask();
+										CheckCancelledScannerTask();
+
+										SearchFiles(frmMain, drive.RootDirectory, extension, rulesets);
 									}
 								}
-								// Überprüfung, ob der Task abgebrochen werden soll
-								CheckCancelledTask();
-
 							}
-						}, _cancellationTokenSource.Token);
+						}
 
+						catch (TaskCanceledException)
+						{
+							frmMain.Invoke(() =>
+								{
+									// Task wurde abgebrochen
+									frmMain.LoggerBox = $"{Environment.NewLine}Scan abgebrochen{Environment.NewLine}";
+									frmMain.ScanButton.Text = "System Scan";
+									frmMain.ScanButton.BackColor = System.Drawing.Color.PaleGreen;
+									frmMain.ToolStripLabel = "";
+								});
+						}
+					}, _scannerCancellationTokenSource.Token);
+
+					frmMain.Invoke(() =>
+					{
 						frmMain.LoggerBox = $"{Environment.NewLine}Scan beendet{Environment.NewLine}";
 						frmMain.ScanButton.Text = "System Scan";
 						frmMain.ScanButton.BackColor = System.Drawing.Color.PaleGreen;
 						frmMain.ToolStripLabel = "";
+					});
 
-					}
-					catch (OperationCanceledException)
-					{
-					}
 				}
 			}
+
 			else if (frmMain.ScanButton.Text == "Stop Scan")
 			{
 				frmMain.ScanButton.Text = "System Scan";
 				frmMain.ScanButton.BackColor = System.Drawing.Color.PaleGreen;
-				ScanEngine.Stop();
+				ScanEngine.StopScan();
 			}
 		}
 
 		/// <summary>
 		/// Löst den Stopp des Tasks aus
 		/// </summary>
-		private static void CheckCancelledTask()
+		private static void CheckCancelledScannerTask()
 		{
-			try
+			if (_scannerCancellationTokenSource.Token.IsCancellationRequested)
 			{
-				if (_cancellationTokenSource.Token.IsCancellationRequested)
-				{
-					_cancellationTokenSource.Token.ThrowIfCancellationRequested();
-				}
+				//_scannerCancellationTokenSource.Token.ThrowIfCancellationRequested();				
+				throw new TaskCanceledException();
 			}
-			catch (OperationCanceledException)
+
+		}
+
+		/// <summary>
+		/// Löst den Stopp des Tasks aus
+		/// </summary>
+		private static void CheckCancelledMonitorTask()
+		{
+			if (_monitorCancellationTokenSource.Token.IsCancellationRequested)
 			{
-				// Task unterbrochen
+				//_scannerCancellationTokenSource.Token.ThrowIfCancellationRequested();				
+				throw new TaskCanceledException();
 			}
+
 		}
 
 		private static void SearchFiles(frmMain frmMain, DirectoryInfo directory, string fileExtension, List<Ruleset> rulesets)// TextBox loggerBox, ToolStripStatusLabel toolStripStatusLabel)
 		{
 
 			// Überspringe Quarantäne-Ordner
-			if (directory.FullName == QUARANTINE_FOLDER)
+			if (directory.FullName.ToLower() == QUARANTINE_FOLDER.ToLower())
 			{
+				MessageBox.Show($"{directory.FullName}:{QUARANTINE_FOLDER}");
 				return;
 			}
 
@@ -138,6 +242,7 @@ namespace DLP_Win
 											if (ruleset.Then.ToLower() == "in quarantäne verschieben")
 											{
 												quarantine = true;
+
 											}
 											else if (ruleset.Then.ToLower() == "loggen")
 											{
@@ -175,17 +280,20 @@ namespace DLP_Win
 							if (quarantine)
 							{
 								Directory.CreateDirectory(QUARANTINE_FOLDER);
+
+								FileSecurity fileSecurity = file.GetAccessControl();
+								IdentityReference author = fileSecurity.GetOwner(typeof(NTAccount));
 								File.Move(file.FullName, Path.Combine(QUARANTINE_FOLDER, file.Name));
-								string text = "Verdächtige Datei in Quarantäne verschoben";
+								string text = $"Verdächtige Datei {file.Name} von Autor {author} in Quarantäne verschoben";
 								Toast.ToastMessage("Quarantäne", text);
-								frmMain.LoggerBox = $"{Environment.NewLine}{file.FullName} wurde in die Quarantäne verschoben!{Environment.NewLine}";
+								frmMain.LoggerBox = $"{Environment.NewLine}Verdächtige Datei {file.FullName} von Autor {author} in Quarantäne verschoben{Environment.NewLine}";
 								//Logger(loggerBox, $"{Environment.NewLine}{file.FullName} wurde in die Quarantäne verschoben!{Environment.NewLine}");
 							}
 						}
 					}
 
 					// Überprüfung, ob der Task abgebrochen werden soll
-					CheckCancelledTask();
+					CheckCancelledScannerTask();
 				}
 
 				// Durchsuche alle Unterverzeichnisse
@@ -194,12 +302,21 @@ namespace DLP_Win
 					SearchFiles(frmMain, subDirectory, fileExtension, rulesets); //, loggerBox, toolStripStatusLabel);
 
 					// Überprüfung, ob der Task abgebrochen werden soll
-					CheckCancelledTask();
+					//CheckCancelledTask();
+					if (_scannerCancellationTokenSource.Token.IsCancellationRequested)
+					{
+						//_scannerCancellationTokenSource.Token.ThrowIfCancellationRequested();				
+						throw new TaskCanceledException();
+					}
 				}
 			}
 			catch (UnauthorizedAccessException)
 			{
 				//Logger(loggerBox, $"{Environment.NewLine}Es konnte nicht auf den Ordner {directory} zugegriffen werden.{Environment.NewLine}");
+			}
+			catch (TaskCanceledException)
+			{
+				// Scannen unterbrochen						
 			}
 			catch (Exception ex)
 			{
@@ -211,19 +328,63 @@ namespace DLP_Win
 		/// <summary>
 		/// Stoppe den System-Scan
 		/// </summary>
-		public static void Stop()
+		public static void StopScan()
 		{
-			_cancellationTokenSource?.Cancel();
+			_scannerCancellationTokenSource?.Cancel();
 		}
 
-		private static void Logger(TextBox loggerBox, string message)
+		/// <summary>
+		/// Stoppe den System-Monitor
+		/// </summary>
+		public static void StopMonitor()
 		{
-			loggerBox.Invoke((MethodInvoker)(() => { loggerBox.Text += message; }));
+			_monitorCancellationTokenSource?.Cancel();
 		}
 
 		private static void StatusLabel(ToolStripStatusLabel toolStripStatusLabel, string message)
 		{
 			toolStripStatusLabel.Text = message;
+		}
+
+		private static bool CompareAuthorToName(string filePath, string compareName)
+		{
+			// Check if the file exists
+			if (File.Exists(filePath))
+			{
+				// Read the author metadata using FileInfo and GetAccessControl method
+				FileInfo fileInfo = new FileInfo(filePath);
+				FileSecurity fileSecurity = fileInfo.GetAccessControl();
+				IdentityReference author = fileSecurity.GetOwner(typeof(NTAccount));
+
+				// Extract the name from the author object
+				string extractedName = ExtractUserName(author.ToString());
+
+				// Compare the author name with the given name
+				return extractedName.Equals(compareName, StringComparison.OrdinalIgnoreCase);
+			}
+			else
+			{
+				throw new FileNotFoundException("File does not exist.");
+			}
+		}
+
+		private static string ExtractUserName(string ntAccount)
+		{
+			int index = ntAccount.IndexOf('\\');
+			if (index >= 0)
+			{
+				return ntAccount.Substring(index + 1);
+			}
+			else
+			{
+				index = ntAccount.IndexOf('@');
+				if (index >= 0)
+				{
+					return ntAccount.Substring(0, index);
+				}
+			}
+
+			return ntAccount;
 		}
 	}
 }
