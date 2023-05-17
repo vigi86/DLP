@@ -44,7 +44,7 @@ jobs:
       - name: Create Zip Archive
         run: |
           mkdir src/DLP_Win/DLP_Win/bin/Release/DLP_Win
-          Copy-Item -Path src/DLP_Win/DLP_Win/bin/Release/net6.0-windows7.0/* -Destination src/DLP_Win/DLP_Win/bin/Release/DLP_Win
+          Copy-Item -Path src/DLP_Win/DLP_Win/bin/Release/net6.0-windows10.0.17763.0/* -Destination src/DLP_Win/DLP_Win/bin/Release/DLP_Win
           Compress-Archive -Path src/DLP_Win/DLP_Win/bin/Release/DLP_Win -DestinationPath src/DLP_Win/DLP_Win/bin/Release/DLP_Win.zip
         shell: powershell
         env:
