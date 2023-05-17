@@ -71,7 +71,7 @@ jobs:
     #     ./location_of_script_within_repo/buildscript.sh
     - name: Debug Build
       working-directory: src/DLP_Win/DLP_Win
-      run: dotnet build --configuration Debug
+      run: dotnet build --configuration Debug /p:EnableWindowsTargeting=true
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
