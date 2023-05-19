@@ -279,7 +279,7 @@ namespace DLP_Win
                                             {
                                                 FileSecurity fileSecurity = file.GetAccessControl();
                                                 IdentityReference author = fileSecurity.GetOwner(typeof(NTAccount));
-                                                frmMain.LoggerBox = $"{Environment.NewLine}Passende Datei zum Ruleset \"{ruleset.If} {ruleset.SelectionType} {ruleset.Condition}\" gefunden:" +
+                                                frmMain.LoggerBox = $"{Environment.NewLine}{DateTime.Now} - Passende Datei zum Ruleset \"{ruleset.If} {ruleset.SelectionType} {ruleset.Condition}\" gefunden:" +
                                                     $"{Environment.NewLine}{file.FullName}" +
                                                     $"{Environment.NewLine}Autor: {author}{Environment.NewLine}";
                                                 //Logger(loggerBox, $"{Environment.NewLine}Passende Datei zum Ruleset \"{ruleset.If} {ruleset.SelectionType} {ruleset.Condition}\" gefunden:{Environment.NewLine}{file.FullName}{Environment.NewLine}");
@@ -288,11 +288,11 @@ namespace DLP_Win
                                             {
                                                 FileSecurity fileSecurity = file.GetAccessControl();
                                                 IdentityReference author = fileSecurity.GetOwner(typeof(NTAccount));
-                                                frmMain.LoggerBox = $"{Environment.NewLine}Passende Datei zum Ruleset \"{ruleset.If} {ruleset.SelectionType} {ruleset.Condition}\" gefunden:" +
+                                                frmMain.LoggerBox = $"{Environment.NewLine}{DateTime.Now} - Passende Datei zum Ruleset \"{ruleset.If} {ruleset.SelectionType} {ruleset.Condition}\" gefunden:" +
                                                     $"{Environment.NewLine}{file.FullName}" +
                                                     $"{Environment.NewLine}Autor: {author}{Environment.NewLine}";
-                                                Toast.ToastMessage("Datei gefunden", 
-                                                    $"Passende Datei zum Ruleset \"{ruleset.If} {ruleset.SelectionType} {ruleset.Condition}\" gefunden:" +
+                                                Toast.ToastMessage("Datei gefunden",
+                                                    $"{DateTime.Now} - Passende Datei zum Ruleset \"{ruleset.If} {ruleset.SelectionType} {ruleset.Condition}\" gefunden:" +
                                                     $"{Environment.NewLine}{file.FullName}" +
                                                     $"{Environment.NewLine}Autor: {author}{Environment.NewLine}");
                                             }
@@ -330,7 +330,10 @@ namespace DLP_Win
                             File.Move(file.FullName, Path.Combine(QUARANTINE_FOLDER, file.Name));
                             string text = $"Verdächtige Datei {file.Name} von Autor {author} in Quarantäne verschoben";
                             Toast.ToastMessage("Quarantäne", text);
-                            frmMain.LoggerBox = $"{Environment.NewLine}Verdächtige Datei {file.FullName} von Autor {author} in Quarantäne verschoben{Environment.NewLine}";
+                            frmMain.LoggerBox = $"{Environment.NewLine}{DateTime.Now} - Verdächtige Datei zum Ruleset \"{ruleset.If} {ruleset.SelectionType} {ruleset.Condition}\" gefunden:" +
+                                                    $"{Environment.NewLine}{file.FullName} in Quarantäne verschoben" +
+                                                    $"{Environment.NewLine}Autor: {author}{Environment.NewLine}";
+
                             //Logger(loggerBox, $"{Environment.NewLine}{file.FullName} wurde in die Quarantäne verschoben!{Environment.NewLine}");
                         }
                     }
