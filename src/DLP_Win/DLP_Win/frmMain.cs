@@ -12,9 +12,11 @@ namespace DLP_Win
         private List<Ruleset> rulesets;
         private string originalCellValue;
         private bool datagridChanged = false;
-        private readonly string AHV_NR = Properties.Settings.Default.AHV_NR; //  @".*756\.\d{4}\.\d{4}\.\d{2}.*";
-        private readonly string CUSTOMER_NR = Properties.Settings.Default.CUSTOMER_NR; // @"\d{2}\.\d{5}-\d";
-        private readonly List<string> EXTENSIONS = new() { "txt" };// { "txt", "doc", "docx" };
+        //private readonly string AHV_NR = Properties.Settings.Default.AHV_NR; //  @".*756\.\d{4}\.\d{4}\.\d{2}.*";
+        //private readonly string CUSTOMER_NR = Properties.Settings.Default.CUSTOMER_NR; // @"\d{2}\.\d{5}-\d";
+        
+        private readonly List<string> EXTENSIONS;
+        private frmSettings frmSettings;
 
         public Form Self => this;
 
@@ -43,6 +45,8 @@ namespace DLP_Win
 
             InitializeComponent();
 
+            frmSettings = new frmSettings();
+            EXTENSIONS = frmSettings.Extensions;
 
             dataGridView1.DataSource = rulesets;
             string rulesetPath = Path.Combine(Application.StartupPath, "lof");
@@ -361,9 +365,8 @@ namespace DLP_Win
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            frmSettings f = new();
-            f.ShowDialog();
+        {            
+            frmSettings.ShowDialog();
         }
     }
 }

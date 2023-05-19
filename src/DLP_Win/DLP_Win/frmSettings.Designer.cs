@@ -77,7 +77,7 @@
             txtExtensions.Name = "txtExtensions";
             txtExtensions.Size = new System.Drawing.Size(209, 23);
             txtExtensions.TabIndex = 2;
-            txtExtensions.Text = "txt doc docx";
+            txtExtensions.Text = "txt";
             // 
             // frmSettings
             // 

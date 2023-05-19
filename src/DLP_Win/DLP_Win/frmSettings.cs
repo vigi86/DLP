@@ -12,6 +12,13 @@ namespace DLP_Win
 {
     public partial class frmSettings : Form
     {
+        public List<string> Extensions
+        {
+            get
+            {
+                return txtExtensions.Text.Split(' ').ToList();
+            }
+        }
         public frmSettings()
         {
             InitializeComponent();
