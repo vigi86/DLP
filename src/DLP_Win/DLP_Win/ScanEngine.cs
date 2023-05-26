@@ -17,7 +17,7 @@ namespace DLP_Win
         private static CancellationTokenSource _scannerCancellationTokenSource;
         private static CancellationTokenSource _monitorCancellationTokenSource;
         private static readonly Form _form;
-        private static string QUARANTINE_FOLDER = $"{Application.StartupPath}\\QUARANTINE";
+        private static string QUARANTINE_FOLDER;// = $"{Application.StartupPath}\\QUARANTINE";
 
         public static async Task Monitor()
         {
@@ -35,13 +35,13 @@ namespace DLP_Win
                             // Nach Dateierweiterung suchen
                             //foreach (string extension in extensions)
                             //{
-                            //	SearchFiles(frmMain, drive.RootDirectory, extension, rulesets);
+                            //	SearchFiles(FrmMain, drive.RootDirectory, extension, rulesets);
 
                             //	// Überprüfung, ob der Task abgebrochen werden soll
                             //	CheckCancelledTask();
                             //}
                             string compareName = "BK-Soft\\Work1";
-                            using (FileSystemWatcher watcher = new FileSystemWatcher(drive.RootDirectory.FullName, "*.txt"))
+                            using (FileSystemWatcher watcher = new(drive.RootDirectory.FullName, "*.txt"))
                             {
                                 watcher.NotifyFilter = NotifyFilters.LastAccess
                                                                      | NotifyFilters.LastWrite
@@ -105,9 +105,10 @@ namespace DLP_Win
         /// </summary>
         /// <param name="rulesets">Liste mit </param>
         /// <returns></returns>
-        public static async Task Scan(frmMain frmMain, List<Ruleset> rulesets, List<string> extensions)
+        public static async Task Scan(FrmMain frmMain, List<Ruleset> rulesets, List<string> extensions, string searchfolder, string quarantinefolder)
         {
             _scannerCancellationTokenSource = new CancellationTokenSource();
+            QUARANTINE_FOLDER = quarantinefolder;
 
             if (frmMain.ScanButton.Text == "System Scan")
             {
@@ -122,19 +123,29 @@ namespace DLP_Win
                         try
                         {
                             // Alle Laufwerke durchsuchen
-                            foreach (DriveInfo drive in DriveInfo.GetDrives())
-                            {
-                                if (drive.IsReady)
-                                {
-                                    // Nach Dateierweiterung suchen
-                                    foreach (string extension in extensions)
-                                    {
-                                        // Überprüfung, ob der Task abgebrochen werden soll
-                                        CheckCancelledScannerTask();
+                            //foreach (DriveInfo drive in DriveInfo.GetDrives())
+                            //{
+                            //    if (drive.IsReady)
+                            //    {
+                            //        // Nach Dateierweiterung suchen
+                            //        foreach (string extension in extensions)
+                            //        {
+                            //            // Überprüfung, ob der Task abgebrochen werden soll
+                            //            CheckCancelledScannerTask();
 
-                                        SearchFiles(frmMain, drive.RootDirectory, extension, rulesets);
-                                    }
-                                }
+                            //            SearchFiles(frmMain, drive.RootDirectory, extension, rulesets);
+                            //        }
+                            //    }
+                            //}
+
+                            // Nach Dateierweiterung suchen
+                            foreach (string extension in extensions)
+                            {
+                                // Überprüfung, ob der Task abgebrochen werden soll
+                                CheckCancelledScannerTask();
+                                DirectoryInfo directory = new(searchfolder);
+
+                                SearchFiles(frmMain, directory, extension, rulesets);
                             }
                         }
 
@@ -196,7 +207,7 @@ namespace DLP_Win
 
         }
 
-        private static void SearchFiles(frmMain frmMain, DirectoryInfo directory, string fileExtension, List<Ruleset> rulesets)// TextBox loggerBox, ToolStripStatusLabel toolStripStatusLabel)
+        private static void SearchFiles(FrmMain frmMain, DirectoryInfo directory, string fileExtension, List<Ruleset> rulesets)// TextBox loggerBox, ToolStripStatusLabel toolStripStatusLabel)
         {
 
             // Überspringe Quarantäne-Ordner
@@ -398,7 +409,7 @@ namespace DLP_Win
             if (File.Exists(filePath))
             {
                 // Read the author metadata using FileInfo and GetAccessControl method
-                FileInfo fileInfo = new FileInfo(filePath);
+                FileInfo fileInfo = new(filePath);
                 FileSecurity fileSecurity = fileInfo.GetAccessControl();
                 IdentityReference author = fileSecurity.GetOwner(typeof(NTAccount));
 

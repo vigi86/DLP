@@ -1,7 +1,7 @@
 ﻿
 namespace DLP_Win
 {
-    partial class frmMain
+    partial class FrmMain
     {
         /// <summary>
         ///  Required designer variable.
@@ -95,7 +95,7 @@ namespace DLP_Win
             cmdScan.TabIndex = 0;
             cmdScan.Text = "System Scan";
             cmdScan.UseVisualStyleBackColor = false;
-            cmdScan.Click += cmdScan_Click;
+            cmdScan.Click += CmdScan_Click;
             // 
             // dataGridView1
             // 
@@ -110,10 +110,10 @@ namespace DLP_Win
             dataGridView1.RowTemplate.Height = 25;
             dataGridView1.Size = new System.Drawing.Size(786, 335);
             dataGridView1.TabIndex = 1;
-            dataGridView1.CellBeginEdit += dataGridView1_CellBeginEdit;
-            dataGridView1.CellValidating += dataGridView1_CellValidating;
-            dataGridView1.DataError += dataGridView1_DataError;
-            dataGridView1.SortCompare += dataGridView1_SortCompare;
+            dataGridView1.CellBeginEdit += DataGridView1_CellBeginEdit;
+            dataGridView1.CellValidating += DataGridView1_CellValidating;
+            dataGridView1.DataError += DataGridView1_DataError;
+            dataGridView1.SortCompare += DataGridView1_SortCompare;
             // 
             // colIndex
             // 
@@ -179,7 +179,7 @@ namespace DLP_Win
             rulesetOpenToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O;
             rulesetOpenToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             rulesetOpenToolStripMenuItem.Text = "Ruleset Ö&ffnen";
-            rulesetOpenToolStripMenuItem.Click += rulesetOpenToolStripMenuItem_Click;
+            rulesetOpenToolStripMenuItem.Click += RulesetOpenToolStripMenuItem_Click;
             // 
             // rulesetSaveToolStripMenuItem
             // 
@@ -187,7 +187,7 @@ namespace DLP_Win
             rulesetSaveToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S;
             rulesetSaveToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             rulesetSaveToolStripMenuItem.Text = "Ruleset &Speichern";
-            rulesetSaveToolStripMenuItem.Click += rulesetSaveToolStripMenuItem_Click;
+            rulesetSaveToolStripMenuItem.Click += RulesetSaveToolStripMenuItem_Click;
             // 
             // toolStripSeparator1
             // 
@@ -200,7 +200,7 @@ namespace DLP_Win
             toolStripMenuItemExit.ShortcutKeys = System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4;
             toolStripMenuItemExit.Size = new System.Drawing.Size(209, 22);
             toolStripMenuItemExit.Text = "B&eenden";
-            toolStripMenuItemExit.Click += toolStripMenuItemExit_Click;
+            toolStripMenuItemExit.Click += ToolStripMenuItemExit_Click;
             // 
             // extrasToolStripMenuItem
             // 
@@ -214,7 +214,7 @@ namespace DLP_Win
             settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             settingsToolStripMenuItem.Text = "&Optionen";
-            settingsToolStripMenuItem.Click += settingsToolStripMenuItem_Click;
+            settingsToolStripMenuItem.Click += SettingsToolStripMenuItem_Click;
             // 
             // stsMain
             // 
@@ -286,7 +286,7 @@ namespace DLP_Win
             openRulesetDialog.FileName = "ruleset.json";
             openRulesetDialog.Filter = "JSON-Datei (*.json)|*.json";
             openRulesetDialog.Title = "Ruleset öffnen";
-            openRulesetDialog.FileOk += openRulesetDialog_FileOk;
+            openRulesetDialog.FileOk += OpenRulesetDialog_FileOk;
             // 
             // saveRulesetDialog
             // 
@@ -294,9 +294,9 @@ namespace DLP_Win
             saveRulesetDialog.FileName = "ruleset.json";
             saveRulesetDialog.Filter = "JSON-Date (*.json)|*.json";
             saveRulesetDialog.Title = "Ruleset speichern";
-            saveRulesetDialog.FileOk += saveRulesetDialog_FileOk;
+            saveRulesetDialog.FileOk += SaveRulesetDialog_FileOk;
             // 
-            // frmMain
+            // FrmMain
             // 
             AllowDrop = true;
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -305,11 +305,11 @@ namespace DLP_Win
             Controls.Add(tabControl1);
             Controls.Add(stsMain);
             Controls.Add(mnuMain);
-            Name = "frmMain";
+            Name = "FrmMain";
             Text = "DLP Rule Mgmt";
-            FormClosing += frmMain_FormClosing;
-            Load += frmMain_Load;
-            DragDrop += frmMain_DragDrop;
+            FormClosing += FrmMain_FormClosing;
+            Load += FrmMain_Load;
+            DragDrop += FrmMain_DragDrop;
             pnlMain.ResumeLayout(false);
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
